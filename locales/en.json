@@ -1,0 +1,42 @@
+{
+    "Welcome!": "Welcome!",
+    "First Name": "First Name",
+    "Last name": "Last Name",
+    "Contact Number": "Contact Number",
+    "Address": "Address",
+    "Email": "Email",
+    "Please enter a valid email address": "Please enter a valid email address",
+    "Password": "Password",
+    "CREATE ACCOUNT": "CREATE ACCOUNT",
+    "Already have an account?": "Already have an account?",
+    "Sign In": "Sign In",
+    "LOGIN": "LOGIN",
+    "Google": "Google",
+    "facebook": "Facebook",
+    "Don't have an account?": "Don't have an account?",
+    "Sign Up": "Sign Up",
+
+    "homeScreen": "HomeScreen",
+  "editProfileScreen": "EditProfileScreen",
+  "changeLanguage": "Change Language",
+  "english": "English",
+  "hindi": "Hindi",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "purchase":"Purchase Screen",
+  "changelist":"Change Party",
+
+  "firstPlan": "12 months",
+  "secondPlan": "/month",
+  "purchaseButton": "PURCHASE",
+  "yearly": "/month",
+
+
+
+  "imageDescription": "Share your photo with your friends and family",
+  "sharePhoto": "Share with Photo",
+  "shareWithoutPhoto": "Share without Photo",
+  "edit": "Edit"
+
+  }
+  

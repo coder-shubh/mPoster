@@ -1,0 +1,329 @@
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+  View,
+  Text,
+  StatusBar,
+  Image,
+  TouchableOpacity,
+  PermissionsAndroid,
+  Alert,
+  Platform,
+  Dimensions,
+} from 'react-native';
+
+import {captureRef} from 'react-native-view-shot';
+import Share from 'react-native-share';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
+import {getApiCall} from '../utils/ApiHandler';
+import Globals from '../utils/Globals';
+import {useTranslation} from 'react-i18next';
+import ModalPopup from '../Component/ModalPopup';
+import MainHeader from '../Component/MainHeader';
+const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
+
+const HomeScreen = props => {
+  const [data, setData] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const {t} = useTranslation();
+  const excludedImageRef = useRef();
+
+  useEffect(() => {
+    getBanners();
+  }, []);
+
+  const getBanners = async () => {
+    try {
+      setModalVisible(true);
+
+      let res = await getApiCall({
+        url: 'User/getBanners?pId=' + Globals.PartyId,
+      });
+      setData(res.ResultData);
+    } catch (e) {
+      alert(e);
+    } finally {
+      setModalVisible(false);
+    }
+  };
+
+  React.useLayoutEffect(() => {
+    props.navigation.setOptions({
+      header: () => <MainHeader title={'About Us'} />,
+    });
+  }, [props.navigation]);
+
+  const shareWithoutImage = async index => {
+    try {
+      // Exclude the specific image from the capture
+      const uri = await captureRef(viewRef[`${index}`], {
+        format: 'png',
+        quality: 0.8,
+      });
+
+      // Share the modified URI without the excluded image
+      const shareResponse = await Share.open({url: uri});
+      console.log('shareResponse', shareResponse);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  // create a ref
+  const viewRef = useRef();
+  // get permission on android
+  const getPermissionAndroid = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Image Download Permission',
+          message: 'Your permission is required to save images to your device',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        return true;
+      }
+      Alert.alert(
+        '',
+        'Your permission is required to save images to your device',
+        [{text: 'OK', onPress: () => {}}],
+        {cancelable: false},
+      );
+    } catch (err) {
+      // handle error as you please
+      console.log('err', err);
+    }
+  };
+
+  // download image
+  const downloadImage = async index => {
+    try {
+      // react-native-view-shot caputures component
+      const uri = await captureRef(viewRef[`${index}`], {
+        format: 'png',
+        quality: 0.8,
+      });
+
+      if (Platform.OS === 'android') {
+        const granted = await getPermissionAndroid();
+        if (!granted) {
+          return;
+        }
+      }
+
+      // cameraroll saves image
+      const image = CameraRoll.save(uri, 'photo');
+      if (image) {
+        Alert.alert(
+          '',
+          'Image saved successfully.',
+          [{text: 'OK', onPress: () => {}}],
+          {cancelable: false},
+        );
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const shareImage = async index => {
+    // captureRef(viewRef[`${index}`], options)
+    try {
+      const uri = await captureRef(viewRef[`${index}`], {
+        format: 'png',
+        quality: 0.8,
+      });
+      console.log('uri', uri);
+      const shareResponse = await Share.open({url: uri});
+      console.log('shareResponse', shareResponse);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const renderItem = ({item, index}) => {
+    const Dheight = screenHeight * 0.8;
+    return (
+      <View style={[styles.listItem, {height: Dheight}]}>
+        <View
+          style={styles.savedComponent}
+          //ref={viewRef}
+          ref={shot => (viewRef[`${index}`] = shot)}>
+          <Image
+            //  source={require('../assets/bg1.png')}
+            source={{
+              uri: Globals.image_Url + item.img,
+            }}
+            resizeMode="stretch"
+            style={{
+              width: '100%',
+              height: '80%',
+              // aspectRatio: 1,
+            }}
+          />
+
+          <View
+            style={{
+              backgroundColor: Globals.partyColor,
+              flexDirection: 'row',
+              width: '100%',
+              height: '20%',
+              position: 'absolute',
+              bottom: '0%',
+            }}>
+            <TouchableOpacity
+              style={{margin: 5, width: '65%'}}
+              activeOpacity={0.9}>
+              <Text style={{fontSize: 22, fontWeight: 'bold', color: 'white'}}>
+                {item.title}
+              </Text>
+              <Text style={{color: 'white', fontSize: 18}}>
+                {item.description}
+              </Text>
+              <Text style={{color: 'white', fontSize: 18}}>
+                GB Nagar ,201306,U.P
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <Image
+            ref={excludedImageRef}
+            source={require('../assets/w.png')}
+            resizeMode="contain"
+            style={{
+              width: '40%',
+              height: undefined,
+              aspectRatio: 1,
+              // backgroundColor:'red',
+              alignContent: 'flex-end',
+              position: 'absolute', //Here is the trick
+              bottom: '0%',
+              right: -10,
+            }}
+          />
+        </View>
+
+        <View style={styles.row}>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#F08000'}]}
+            onPress={() => shareImage(index)}>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>
+              {t('sharePhoto')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#C5C5C5'}]}
+            onPress={() => {
+              shareWithoutImage(index);
+            }}>
+            <Text style={{color: 'black', fontWeight: 'bold'}}>
+              {t('shareWithoutPhoto')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: 'grey'}]}
+            onPress={() =>
+              props.navigation.navigate('EditScreen', {item: item})
+            }>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>
+              {t('edit')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+
+  return (
+    <View style={styles.body}>
+      <StatusBar barStyle="dark-content" />
+      <ModalPopup modalVisible={modalVisible} />
+
+      {data?.length > 0 ? (
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          getItemLayout={(data, index) => ({
+            length: screenHeight * 0.8,
+            offset: screenHeight * 0.8 * index,
+            index,
+          })}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      ) : (
+        <Text style={{textAlign: 'center', top: '50%', fontWeight: 'bold'}}>
+          No Content
+        </Text>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: 'white',
+  },
+  body: {
+    flex: 1,
+    backgroundColor: '#F8F8F8',
+  },
+  savedComponent: {
+    backgroundColor: 'green',
+    height: '80%',
+    width: screenWidth,
+    alignSelf: 'center',
+    // marginBottom: 30,
+  },
+  text: {
+    textAlign: 'center',
+  },
+  image: {
+    width: 252,
+    height: 150,
+    alignSelf: 'center',
+    marginTop: 30,
+    marginBottom: 5,
+  },
+  row: {
+    alignSelf: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    // marginTop: 45,
+    position: 'absolute',
+    // top: '70%',
+    bottom: '5%',
+    height: '8%',
+    backgroundColor: '#fff',
+  },
+  button: {
+    backgroundColor: 'orange',
+    padding: 10,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    borderColor: 'white',
+    borderWidth: 1,
+    elevation: 5,
+    height: 45,
+  },
+  listItem: {
+    minHeight: 610,
+    width: '100%',
+    // borderRadius: 10,
+    alignSelf: 'center',
+    // margin: 10,
+    elevation: 10,
+    backgroundColor: '#fff',
+    marginBottom: 40,
+    // alignItems: 'center',
+    // justifyContent: 'space-around',
+  },
+});
+
+export default HomeScreen;

@@ -1,0 +1,35 @@
+import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {View, TouchableOpacity} from 'react-native';
+import UserAvatar from 'react-native-user-avatar';
+
+export default function MainHeader({title}) {
+  const navigation = useNavigation();
+  const openDrawer = () => {
+    navigation.openDrawer();
+  };
+
+  return (
+    <View
+      style={{
+        height: 50,
+        width: '100%',
+        paddingHorizontal: 10,
+        justifyContent: 'center',
+      }}>
+      <TouchableOpacity
+        style={{
+          height: 40,
+          width: 40,
+          borderRadius: 50,
+        }}
+        activeOpacity={0.5}
+        onPress={() => {
+          openDrawer();
+        }}>
+                  <UserAvatar size={40} name="Shubham Singh" />
+
+        </TouchableOpacity>
+    </View>
+  );
+}

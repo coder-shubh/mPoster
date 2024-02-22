@@ -1,0 +1,45 @@
+{
+    "Welcome!": "स्वागत है!",
+    "First Name": "पहला नाम",
+    "Last name": "अंतिम नाम",
+    "Contact Number": "संपर्क नंबर",
+    "Address": "पता",
+    "Email": "ईमेल",
+    "Please enter a valid email address": "कृपया एक वैध ईमेल पता दर्ज करें",
+    "Password": "पासवर्ड",
+    "CREATE ACCOUNT": "खाता बनाएं",
+    "Already have an account?": "क्या आपका पहले से ही एक खाता है?",
+    "Sign In": "साइन इन करें",
+    "LOGIN": "लॉग इन करें",
+  "Google": "गूगल",
+  "facebook": "फेसबुक",
+  "Don't have an account?": "खाता नहीं है?",
+  "Sign Up": "साइन अप करें",
+
+  "homeScreen": "होम स्क्रीन",
+  "editProfileScreen": "प्रोफ़ाइल संपादित करें",
+  "changeLanguage": "भाषा बदलें",
+  "english": "अंग्रेज़ी",
+  "hindi": "हिन्दी",
+  "darkMode": "डार्क मोड",
+  "lightMode": "लाइट मोड",
+  "purchase":"खरीद स्क्रीन",
+  "changelist":"पार्टी बदले",
+
+
+
+  "firstPlan": "12 महीने",
+  "secondPlan": "/ महीना",
+  "purchaseButton": "खरीदें",
+  "yearly": "/साल",
+
+
+
+  "imageDescription": "अपनी फ़ोटो को अपने दोस्तों और परिवार के साथ साझा करें",
+  "sharePhoto": "फोटो के साथ साझा करें",
+  "shareWithoutPhoto": "बिना फोटो के साझा करें",
+  "edit": "संपादित करें"
+
+
+  }
+  
