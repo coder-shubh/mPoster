@@ -15,6 +15,7 @@
   "facebook": "फेसबुक",
   "Don't have an account?": "खाता नहीं है?",
   "Sign Up": "साइन अप करें",
+  "or":"या",
 
   "homeScreen": "होम स्क्रीन",
   "editProfileScreen": "प्रोफ़ाइल संपादित करें",
@@ -25,6 +26,7 @@
   "lightMode": "लाइट मोड",
   "purchase":"खरीद स्क्रीन",
   "changelist":"पार्टी बदले",
+  "logout": "लॉगआउट",
 
 
 

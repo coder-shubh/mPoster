@@ -15,6 +15,7 @@
     "facebook": "Facebook",
     "Don't have an account?": "Don't have an account?",
     "Sign Up": "Sign Up",
+    "or":"or",
 
     "homeScreen": "HomeScreen",
   "editProfileScreen": "EditProfileScreen",
@@ -25,6 +26,7 @@
   "lightMode": "Light Mode",
   "purchase":"Purchase Screen",
   "changelist":"Change Party",
+  "logout":"Logout",
 
   "firstPlan": "12 months",
   "secondPlan": "/month",

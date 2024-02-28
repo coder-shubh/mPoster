@@ -15,7 +15,9 @@ export default function MainHeader({title}) {
         height: 50,
         width: '100%',
         paddingHorizontal: 10,
-        justifyContent: 'center',
+        paddingVertical:5,
+        justifyContent: 'flex-end',
+        flexDirection:'row'
       }}>
       <TouchableOpacity
         style={{

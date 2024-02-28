@@ -1,7 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
      <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CAMERA" />
@@ -33,7 +32,6 @@
       </activity>
       <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
       <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
-      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
       <provider
         android:name="androidx.core.content.FileProvider"
         android:authorities="${applicationId}.provider"
@@ -43,5 +41,6 @@
             android:name="android.support.FILE_PROVIDER_PATHS"
             android:resource="@xml/filepaths" />
     </provider>
+          <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
     </application>
 </manifest>

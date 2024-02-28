@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Title, Caption, Drawer} from 'react-native-paper';
@@ -21,6 +22,9 @@ import globalStyles from '../Component/Styles/globalStyles';
 import {useLanguage} from '../Component/LanguageProvider ';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'react-i18next';
+import { CommonActions } from '@react-navigation/native';
+import { LoginManager } from 'react-native-fbsdk-next';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export function DrawerContent(props) {
   const {language, changeLanguage} = useLanguage();
@@ -35,11 +39,55 @@ export function DrawerContent(props) {
     toggleTheme(isOn);
   };
 
+
+  const resetToScreen = (navigation, screenName) => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: screenName }],
+      })
+    );
+  };
+
   const changeLanguages = selectedLanguage => {
     changeLanguage(selectedLanguage);
     AsyncStorage.setItem('language', selectedLanguage.toString());
     setLanguageOptionsVisible(false);
   };
+
+
+  const LogOut=async()=>{
+    await AsyncStorage.removeItem('PartyId');
+    await AsyncStorage.removeItem('id');
+    const fLogin = await AsyncStorage.getItem('fLogin');
+    const gLogin = await AsyncStorage.getItem('gLogin');
+
+
+    if(fLogin){
+      LoginManager.logOut();
+      await AsyncStorage.removeItem('fLogin');
+      resetToScreen(props.navigation, 'LoginView');
+    }else if(gLogin){
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      await AsyncStorage.removeItem('gLogin');
+      resetToScreen(props.navigation, 'LoginView');
+    }
+    else{
+    resetToScreen(props.navigation, 'LoginView');
+    }
+
+  }
+
+  const createTwoButtonAlert = () =>
+  Alert.alert('mPoster', 'Logout', [
+    {
+      text: 'Cancel',
+      onPress: () => console.log('Cancel Pressed'),
+      style: 'cancel',
+    },
+    {text: 'OK', onPress: () => LogOut()},
+  ]);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -142,6 +190,28 @@ export function DrawerContent(props) {
             label={t('purchase')}
             onPress={() => {
               props.navigation.navigate('PurchaseScreen');
+            }}
+          />
+
+          <Image
+            style={{height: 10, width: '100%'}}
+            resizeMode="contain"
+            source={require('../assets/Rectangleline.png')}
+          />
+          
+
+
+          <DrawerItem
+            icon={({size}) => (
+              <Icon
+                name="account"
+                color={Colors.whiteText}
+                size={size}
+              />
+            )}
+            label={t('logout')}
+            onPress={() => {
+              createTwoButtonAlert();
             }}
           />
 

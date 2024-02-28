@@ -47,6 +47,9 @@ const validateEmail = (email) => {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
             console.log(userInfo);
+            AsyncStorage.setItem('gLogin', 'gLogin');
+
+            handleSignUp(userInfo.user)
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // User canceled the sign in
@@ -71,8 +74,8 @@ const validateEmail = (email) => {
           console.log('Facebook login was cancelled');
         } else {
           const tokenData = await AccessToken.getCurrentAccessToken();
-    console.log(tokenData)
-          const userInfoRequest = new GraphRequest('/me', {
+    // console.log(tokenData)
+          const userInfoRequest = new GraphRequest('/me?', {
             parameters: {
               fields: {
                 string: 'id,name,email', 
@@ -86,13 +89,8 @@ const validateEmail = (email) => {
               console.error('Error fetching Facebook user data:', error);
             } else {
               console.log('Facebook login successful:', result);
-              
-              // Access result.id, result.name, result.email, and result.phone as needed
-              console.log('User ID:', result.id);
-              console.log('Name:', result.name);
-              console.log('Email:', result.email);
-              // Print phone number if requested
-              // console.log('Phone:', result.phone);
+              AsyncStorage.setItem('fLogin', 'fLogin');
+              handleSignUp(result);
             }
           });
     
@@ -104,6 +102,40 @@ const validateEmail = (email) => {
       }
     };
     
+
+    
+
+
+
+    const handleSignUp = async (result) => {
+     
+      const info = {
+        Name: result.name,
+        Email: result.email,
+        Pwd: '',
+        MobileNumber: '',
+        PartyId: 0,
+        isFGLogin: true,
+      };
+      try {
+        setModalVisible(true);
+  
+        let res = await postApiCall({url: 'User/UserRegister', json: info});
+        if (res.StatusCode==1) {
+          // navigation.goBack();
+
+            SaveUser(res.ResultData.UserId,res.ResultData.PartyId)
+          console.log(res);
+        } else {
+          console.log(res);
+        }
+      } catch (e) {
+        alert(e);
+      } finally {
+        setModalVisible(false);
+      }
+    };
+
 
 
     
@@ -185,6 +217,7 @@ const validateEmail = (email) => {
         handleLogin,
         handleFacebookLogin,
         modalVisible,
-        setModalVisible
+        setModalVisible,
+        handleSignUp
     }
 }

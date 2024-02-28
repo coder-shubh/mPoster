@@ -12,6 +12,7 @@ import {
   Alert,
   Platform,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 
 import {captureRef} from 'react-native-view-shot';
@@ -30,6 +31,7 @@ const HomeScreen = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const {t} = useTranslation();
   const excludedImageRef = useRef();
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     getBanners();
@@ -47,6 +49,7 @@ const HomeScreen = props => {
       alert(e);
     } finally {
       setModalVisible(false);
+      setRefreshing(false);
     }
   };
 
@@ -255,6 +258,14 @@ const HomeScreen = props => {
             index,
           })}
           keyExtractor={(item, index) => index.toString()}
+          refreshControl={
+            <RefreshControl
+            refreshing={refreshing}
+            onRefresh={getBanners}
+            colors={['#0000ff']} // Android colors
+            tintColor={'#0000ff'} // iOS color
+          />
+          }
         />
       ) : (
         <Text style={{textAlign: 'center', top: '50%', fontWeight: 'bold'}}>

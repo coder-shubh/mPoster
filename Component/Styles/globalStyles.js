@@ -88,12 +88,16 @@ const globalStyles = () => {
           marginTop: '5%'
     },
     socialButton:{
-      width: '25%',
-      height: 40,
+      width: '100%',
+      height: 50,
       backgroundColor: Colors.primaryTheme,
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
+      borderWidth:1,
+      borderColor:'#000',
+      borderRadius:50,
+      marginTop:10
     },
 
 

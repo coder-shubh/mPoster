@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">mPoster</string>
-    <string name="facebook_app_id">707458064851530</string>
-    <string name="fb_login_protocol_scheme">fb1234</string>
-    <string name="facebook_client_token">889fda220c1ca33d1fd62933f842098f</string>
+    <string name="facebook_app_id">1615802865894094</string>
+
+    <!-- <string name="facebook_app_id">707458064851530</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>-->
+    <string name="facebook_client_token">173249b2a3d94e7090899f6143b7a4b1</string> 
 </resources>
