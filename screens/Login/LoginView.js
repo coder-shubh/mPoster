@@ -97,7 +97,6 @@ export default function LoginView({navigation}) {
             styles.buttonContainer,
             {
               alignItems: 'center',
-              // flexDirection: 'row',
               justifyContent: 'space-between',
               marginTop: 50,
               height: '25%',
@@ -113,7 +112,7 @@ export default function LoginView({navigation}) {
             style={styles.socialButton}
             onPress={() => {
               viewModal.signIn();
-            }}>
+            }}activeOpacity={0.5}>
             <Image
               style={{height: 40, width: 40}}
               resizeMode="contain"
@@ -126,13 +125,13 @@ export default function LoginView({navigation}) {
             style={styles.socialButton}
             onPress={() => {
               viewModal.handleFacebookLogin();
-            }}>
+            }}activeOpacity={0.5}>
             <Image
               style={{height: 30, width: 30}}
               resizeMode="contain"
               source={require('../../assets/facebook.png')}
             />
-            <Text style={[styles.subText, {color: 'blue',width:'90%',right:'40%'}]}>{t("facebook")}</Text>
+            <Text style={[styles.subText, {color: 'blue',width:'85%',right:'30%'}]}>{t("facebook")}</Text>
           </TouchableOpacity>
 
           {/* <LoginButton

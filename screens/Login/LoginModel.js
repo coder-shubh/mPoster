@@ -123,8 +123,7 @@ const validateEmail = (email) => {
         let res = await postApiCall({url: 'User/UserRegister', json: info});
         if (res.StatusCode==1) {
           // navigation.goBack();
-
-            SaveUser(res.ResultData.UserId,res.ResultData.PartyId)
+            SaveUser(res?.ResultData?.UserId,res?.ResultData?.PartyId)
           console.log(res);
         } else {
           console.log(res);

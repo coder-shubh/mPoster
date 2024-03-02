@@ -212,7 +212,7 @@ const HomeScreen = props => {
           />
         </View>
 
-        <View style={styles.row}>
+        <View style={[styles.row,{width:screenWidth}]}>
           <TouchableOpacity
             style={[styles.button, {backgroundColor: '#F08000'}]}
             onPress={() => shareImage(index)}>
@@ -239,6 +239,7 @@ const HomeScreen = props => {
             </Text>
           </TouchableOpacity>
         </View>
+
       </View>
     );
   };
