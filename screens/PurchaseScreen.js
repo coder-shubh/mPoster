@@ -69,10 +69,10 @@ export default function PurchaseScreen() {
             alignItems: 'center',
           }}>
           <Text
-            style={{color: Colors.orange, fontSize: 20, fontWeight: 'bold'}}>
+            style={{color: Colors.orange, fontSize: 20, fontFamily: 'Sen-Bold'}}>
             ₹499
           </Text>
-          <Text style={{color:theme === 'light' ? Colors.blackText:Colors.whiteText, fontSize: 15}}>{t('firstPlan')}</Text>
+          <Text style={{color:theme === 'light' ? Colors.blackText:Colors.whiteText, fontSize: 15,fontFamily:'Sen-Regular'}}>{t('firstPlan')}</Text>
         </View>
         <Text
           style={{
@@ -118,10 +118,10 @@ export default function PurchaseScreen() {
             alignItems: 'center',
           }}>
           <Text
-            style={{color: Colors.orange, fontSize: 20, fontWeight: 'bold'}}>
+            style={{color: Colors.orange, fontSize: 20, fontFamily: 'Sen-Bold'}}>
             ₹99
           </Text>
-          <Text style={{color: Colors.blackText, fontSize: 15}}>{t('secondPlan')}</Text>
+          <Text style={{color: Colors.blackText, fontSize: 15,fontFamily:'Sen-Regular'}}>{t('secondPlan')}</Text>
         </View>
         <RadioButton.Group
           onValueChange={newValue => setValue(newValue)}
@@ -133,7 +133,7 @@ export default function PurchaseScreen() {
 {price &&
       <TouchableOpacity
         style={{
-          height: 100,
+          height: 70,
           width: '100%',
           alignSelf: 'center',
           backgroundColor: 'red',
@@ -154,17 +154,18 @@ export default function PurchaseScreen() {
             alignItems: 'center',
           }}>
           <Text
-            style={{color: Colors.whiteText, fontSize: 20, fontWeight: 'bold'}}>
+            style={{color: Colors.whiteText, fontSize: 20,fontFamily: 'Sen-Bold',
+          }}>
             ₹{price}
           </Text>
-          <Text style={{color: Colors.whiteText, fontSize: 15}}>{t("yearly")}</Text>
+          <Text style={{color: Colors.whiteText, fontSize: 15,fontFamily:'Sen-Regular'}}>{t("yearly")}</Text>
         </View>
         <Text
           style={{
             color: Colors.whiteText,
             fontSize: 20,
-            fontWeight: 'bold',
-            textAlignVertical: 'center',
+            fontFamily: 'Sen-Bold',
+                        textAlignVertical: 'center',
           }}>
           . {t("purchaseButton")}
         </Text>

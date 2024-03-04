@@ -133,6 +133,7 @@ export function DrawerContent(props) {
               <Icon name="home" color={Colors.whiteText} size={size} />
             )}
             label={t('homeScreen')}
+            labelStyle={{fontFamily: 'Sen-Bold'}}
             onPress={() => {
               props.navigation.navigate('HomeScreen');
             }}
@@ -148,6 +149,7 @@ export function DrawerContent(props) {
               <Icon name="image-edit" color={Colors.whiteText} size={size} />
             )}
             label={t('editProfileScreen')}
+            labelStyle={{fontFamily: 'Sen-Bold'}}
             onPress={() => {
               props.navigation.navigate('EditProfileScreen');
             }}
@@ -168,6 +170,7 @@ export function DrawerContent(props) {
               />
             )}
             label={t('changelist')}
+            labelStyle={{fontFamily: 'Sen-Bold'}}
             onPress={() => {
               props.navigation.navigate('PartyList');
             }}
@@ -188,6 +191,7 @@ export function DrawerContent(props) {
               />
             )}
             label={t('purchase')}
+            labelStyle={{fontFamily: 'Sen-Bold'}}
             onPress={() => {
               props.navigation.navigate('PurchaseScreen');
             }}
@@ -210,6 +214,7 @@ export function DrawerContent(props) {
               />
             )}
             label={t('logout')}
+            labelStyle={{fontFamily: 'Sen-Bold'}}
             onPress={() => {
               createTwoButtonAlert();
             }}
@@ -234,6 +239,7 @@ export function DrawerContent(props) {
             />
           )}
           label={t('changeLanguage')}
+          labelStyle={{fontFamily: 'Sen-Bold'}}
           onPress={() => {
             setLanguageOptionsVisible(!languageOptionsVisible);
           }}
@@ -243,10 +249,12 @@ export function DrawerContent(props) {
           <>
             <DrawerItem
               label={t('english')}
+              labelStyle={{fontFamily: 'Sen-Bold'}}
               onPress={() => changeLanguages('en')}
             />
             <DrawerItem
               label={t('hindi')}
+              labelStyle={{fontFamily: 'Sen-Bold'}}
               onPress={() => changeLanguages('hi')}
             />
             {/* Add more language options as needed */}
@@ -265,6 +273,7 @@ export function DrawerContent(props) {
             />
           )}
           label={t(switchTheme ? 'darkMode' : 'lightMode')}
+          labelStyle={{fontFamily: 'Sen-Bold'}}
         />
         <View style={styles.switchContainer}>
           <ToggleSwitch

@@ -2,6 +2,7 @@ import {
   View,
   Text,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import globalStyles from '../../Component/Styles/globalStyles';
 import {TextInput} from 'react-native-paper';
@@ -24,6 +25,7 @@ export default function SignUp({navigation}) {
     <ScrollView>
     <View style={styles.container}>
     <ModalPopup modalVisible={viewModal.modalVisible}/>
+    <StatusBar barStyle="dark-content" backgroundColor='#F0F1F5' />
 
       <Text style={[styles.title, {left: '5%', marginTop: '40%'}]}>
       {t('Welcome!')}

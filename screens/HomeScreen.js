@@ -183,13 +183,15 @@ const HomeScreen = props => {
             <TouchableOpacity
               style={{margin: 5, width: '65%'}}
               activeOpacity={0.9}>
-              <Text style={{fontSize: 22, fontWeight: 'bold', color: 'white'}}>
+              <Text style={{fontSize: 22, fontWeight: 'bold', color: 'white',      fontFamily: 'Sen-Bold',
+}}>
                 {item.title}
               </Text>
-              <Text style={{color: 'white', fontSize: 18}}>
+              <Text style={{color: 'white', fontSize: 18,      fontFamily: 'Sen-Regular',
+}}>
                 {item.description}
               </Text>
-              <Text style={{color: 'white', fontSize: 18}}>
+              <Text style={{color: 'white', fontSize: 18,fontFamily: 'Sen-Regular'}}>
                 GB Nagar ,201306,U.P
               </Text>
             </TouchableOpacity>
@@ -216,7 +218,7 @@ const HomeScreen = props => {
           <TouchableOpacity
             style={[styles.button, {backgroundColor: '#F08000'}]}
             onPress={() => shareImage(index)}>
-            <Text style={{color: 'white', fontWeight: 'bold'}}>
+            <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
               {t('sharePhoto')}
             </Text>
           </TouchableOpacity>
@@ -225,7 +227,7 @@ const HomeScreen = props => {
             onPress={() => {
               shareWithoutImage(index);
             }}>
-            <Text style={{color: 'black', fontWeight: 'bold'}}>
+            <Text style={{color: 'black', fontFamily: 'Sen-Bold'}}>
               {t('shareWithoutPhoto')}
             </Text>
           </TouchableOpacity>
@@ -234,7 +236,7 @@ const HomeScreen = props => {
             onPress={() =>
               props.navigation.navigate('EditScreen', {item: item})
             }>
-            <Text style={{color: 'white', fontWeight: 'bold'}}>
+            <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
               {t('edit')}
             </Text>
           </TouchableOpacity>
@@ -246,7 +248,9 @@ const HomeScreen = props => {
 
   return (
     <View style={styles.body}>
-      <StatusBar barStyle="dark-content" />
+      {/* <StatusBar barStyle="dark-content" /> */}
+      <StatusBar barStyle="dark-content" backgroundColor='#F0F1F5' />
+
       <ModalPopup modalVisible={modalVisible} />
 
       {data?.length > 0 ? (
@@ -269,7 +273,7 @@ const HomeScreen = props => {
           }
         />
       ) : (
-        <Text style={{textAlign: 'center', top: '50%', fontWeight: 'bold'}}>
+        <Text style={{textAlign: 'center', top: '50%', fontFamily: 'Sen-Bold'}}>
           No Content
         </Text>
       )}
@@ -283,7 +287,7 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#F0F1F5',
   },
   savedComponent: {
     backgroundColor: 'green',

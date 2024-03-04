@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'Sen-Bold',
     marginBottom: 20,
   },
   button: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Colors.purple,
     textAlign: 'center',
-    fontWeight:'bold'
+    fontFamily: 'Sen-Bold',
   },
 });
 

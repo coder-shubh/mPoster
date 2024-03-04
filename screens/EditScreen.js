@@ -177,15 +177,15 @@ const EditScreen = props => {
                     <Text
                       style={{
                         fontSize: 22,
-                        fontWeight: 'bold',
-                        color: 'white',
+                        fontFamily: 'Sen-Bold',
+                                                color: 'white',
                       }}>
                       {title}
                     </Text>
-                    <Text style={{color: 'white', fontSize: 18}}>
+                    <Text style={{color: 'white', fontSize: 18,fontFamily: 'Sen-Regular'}}>
                       {subtitle}
                     </Text>
-                    <Text style={{color: 'white', fontSize: 18}}>
+                    <Text style={{color: 'white', fontSize: 18,fontFamily: 'Sen-Regular'}}>
                       GB Nagar ,201306,U.P
                     </Text>
                   </TouchableOpacity>
@@ -222,14 +222,14 @@ const EditScreen = props => {
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: '#F08000'}]}
                   onPress={() => shareImage()}>
-                  <Text style={{color: 'white', fontWeight: 'bold'}}>
+                  <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
                     {t('sharePhoto')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: '#C5C5C5'}]}
                   onPress={downloadImage}>
-                  <Text style={{color: 'black', fontWeight: 'bold'}}>
+                  <Text style={{color: 'black', fontFamily: 'Sen-Bold'}}>
                     {t('shareWithoutPhoto')}
                   </Text>
                 </TouchableOpacity>
@@ -238,7 +238,7 @@ const EditScreen = props => {
                   // onPress={() =>
                   //   props.navigation.navigate('EditScreen', {rowItem: item})}
                 >
-                  <Text style={{color: 'white', fontWeight: 'bold'}}>
+                  <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
                     {t('edit')}
                   </Text>
                 </TouchableOpacity>
@@ -394,8 +394,8 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    fontFamily: 'Sen-Bold',
+        marginBottom: 10,
   },
   input: {
     height: 40,

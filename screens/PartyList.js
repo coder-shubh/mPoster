@@ -93,7 +93,7 @@ const PartyList = props => {
         <Text
           style={{
             fontSize: 22,
-            fontWeight: 'bold',
+            fontFamily: 'Sen-Bold',
             color: 'grey',
             marginLeft: 20,
           }}>
