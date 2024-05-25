@@ -1,61 +1,71 @@
-import React from 'react';
-import {View, Image, FlatList, Dimensions, Text, StatusBar} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Image,
+  FlatList,
+  Dimensions,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import globalStyles from '../../Component/Styles/globalStyles';
-import {FAB, Portal, PaperProvider} from 'react-native-paper';
+import {FAB, Portal, PaperProvider, Button} from 'react-native-paper';
 import EditModal from './EditModal';
 import MaterialIcons from 'react-native-vector-icons/FontAwesome';
-import {Button} from 'react-native-paper';
 import {Colors} from '../../utils/Colors';
 import DeletePopUp from '../../Component/DeletePopUp';
 
 const {width} = Dimensions.get('window');
 
-export default function EditProfileScreen() {
+export default function EditProfileScreen({navigation}) {
   const styles = globalStyles();
   const viewModal = EditModal();
-  const [state, setState] = React.useState({open: false});
+  const [state, setState] = useState({open: false});
   const componentWidth = (width * 95) / 100;
-
   const onStateChange = ({open}) => setState({open});
   const {open} = state;
 
-  const renderItem = ({item, index}) => {
-    return (
-      <View
-        style={{
-          height: 150,
-          width: componentWidth / 3,
-          margin: 5,
-          borderRadius: 10,
-        }}>
-        <Image
-          style={{height: '100%', width: '100%', borderRadius: 10}}
-          resizeMode="cover"
-          source={{uri: viewModal.FilePath}}
-        />
-      </View>
-    );
-  };
+  const renderItem = ({item}) => (
+    <TouchableOpacity
+      style={{
+        height: 150,
+        width: componentWidth / 3 - 10,
+        margin: 5,
+        borderRadius: 10,
+      }}
+      activeOpacity={0.8}
+      onPress={() => {
+        viewModal.setSelectedImage(item);
+      }}>
+      <Image
+        style={{height: '100%', width: '100%', borderRadius: 10}}
+        resizeMode="cover"
+        source={{uri: item}}
+      />
+    </TouchableOpacity>
+  );
 
   return (
     <PaperProvider>
       <DeletePopUp
         show={viewModal.visible}
         press={() => {
-          viewModal.setFilePath(null);
+          viewModal.setFilePaths([]);
           viewModal.setVisible(false);
         }}
-        Cancle={() => {
-          viewModal.setVisible(false);
-        }}
+        Cancle={() => viewModal.setVisible(false)}
       />
-      {viewModal.FilePath ? (
+
+      {viewModal.filePaths?.length > 0 ? (
         <View style={{flex: 1}}>
           <View style={{height: '40%', width: '100%'}}>
             <Image
               style={{height: '100%', width: '100%'}}
               resizeMode="cover"
-              source={{uri: viewModal.FilePath}}
+              source={{
+                uri: viewModal.selectedImage
+                  ? viewModal.selectedImage
+                  : viewModal.filePaths[0],
+              }}
             />
           </View>
           <View
@@ -67,22 +77,22 @@ export default function EditProfileScreen() {
               icon="camera"
               mode="elevated"
               style={{borderRadius: 10}}
-              onPress={() => viewModal.chooseFile('photo')}>
+              onPress={() => viewModal.updateFile('photo')}>
               Change Photo
             </Button>
             <Button
               icon="notebook-edit"
               mode="contained-tonal"
               style={{borderRadius: 10}}
-              onPress={() => console.log('Pressed')}>
+              onPress={() => navigation.navigate('PartyList')}>
               Change Party
             </Button>
           </View>
           <Text style={[styles.subText, {margin: 10}]}>
-            Saved Profile Picture:
+            Saved Profile Pictures:
           </Text>
           <FlatList
-            data={[1, 1, 1, 1]}
+            data={viewModal.filePaths}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
             numColumns={3}
@@ -91,7 +101,7 @@ export default function EditProfileScreen() {
       ) : (
         <View style={[styles.container, {justifyContent: 'center'}]}>
           <MaterialIcons name="image" size={100} color={Colors.Iris} />
-          <Text style={styles.subText}>Upload Your Image </Text>
+          <Text style={styles.subText}>Upload Your Image</Text>
         </View>
       )}
 
@@ -103,10 +113,8 @@ export default function EditProfileScreen() {
           actions={[
             {
               icon: 'delete',
-              label: 'Remove Image',
-              onPress: () => {
-                viewModal.setVisible(true);
-              },
+              label: 'Remove Images',
+              onPress: () => viewModal.setVisible(true),
             },
             {
               icon: 'camera',
@@ -122,7 +130,7 @@ export default function EditProfileScreen() {
           onStateChange={onStateChange}
           onPress={() => {
             if (open) {
-              // do something if the speed dial is open
+              // Handle FAB open state
             }
           }}
         />

@@ -222,14 +222,14 @@ const EditScreen = props => {
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: '#F08000'}]}
                   onPress={() => shareImage()}>
-                  <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
+                  <Text style={styles.buttonText}>
                     {t('sharePhoto')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: '#C5C5C5'}]}
                   onPress={downloadImage}>
-                  <Text style={{color: 'black', fontFamily: 'Sen-Bold'}}>
+                  <Text style={styles.buttonTextBlack}>
                     {t('shareWithoutPhoto')}
                   </Text>
                 </TouchableOpacity>
@@ -238,7 +238,7 @@ const EditScreen = props => {
                   // onPress={() =>
                   //   props.navigation.navigate('EditScreen', {rowItem: item})}
                 >
-                  <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
+                  <Text style={styles.buttonText}>
                     {t('edit')}
                   </Text>
                 </TouchableOpacity>
@@ -357,13 +357,16 @@ const styles = StyleSheet.create({
     marginTop: 45,
   },
   button: {
-    backgroundColor: 'orange',
-    padding: 10,
-    paddingHorizontal: 15,
+    flex: 1,
+    marginHorizontal: 5,
+    paddingVertical: 5,
     borderRadius: 10,
     borderColor: 'white',
     borderWidth: 1,
     elevation: 5,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   listItem: {
     height: 610,
@@ -407,6 +410,21 @@ const styles = StyleSheet.create({
   },
   keyboardAvoidingContainer: {
     flex: 1,
+  },
+  buttonText: {
+    color: 'white',
+    fontFamily: 'Sen-Bold',
+    textAlign: 'center',
+    flexShrink: 1, 
+    fontSize:11
+  },
+  buttonTextBlack: {
+    color: 'black',
+    fontFamily: 'Sen-Bold',
+    textAlign: 'center',
+    flexShrink: 1,
+    fontSize:11
+
   },
 });
 

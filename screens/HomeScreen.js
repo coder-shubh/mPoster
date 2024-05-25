@@ -150,98 +150,166 @@ const HomeScreen = props => {
     }
   };
 
-  const renderItem = ({item, index}) => {
+  // const renderItem = ({item, index}) => {
+  //   const Dheight = screenHeight * 0.8;
+  //   return (
+  //     <View style={[styles.listItem, {height: Dheight}]}>
+  //       <View
+  //         style={styles.savedComponent}
+  //         //ref={viewRef}
+  //         ref={shot => (viewRef[`${index}`] = shot)}>
+  //         <Image
+  //           //  source={require('../assets/bg1.png')}
+  //           source={{
+  //             uri: Globals.image_Url + item.img,
+  //           }}
+  //           resizeMode="stretch"
+  //           style={{
+  //             width: '100%',
+  //             height: '80%',
+  //             // aspectRatio: 1,
+  //           }}
+  //         />
+
+  //         <View
+  //           style={{
+  //             backgroundColor: Globals.partyColor,
+  //             flexDirection: 'row',
+  //             width: '100%',
+  //             height: '20%',
+  //             position: 'absolute',
+  //             bottom: '0%',
+  //           }}>
+  //           <TouchableOpacity
+  //             style={{margin: 5, width: '65%'}}
+  //             activeOpacity={0.9}>
+  //             <Text
+  //               style={{
+  //                 fontSize: 22,
+  //                 fontWeight: 'bold',
+  //                 color: 'white',
+  //                 fontFamily: 'Sen-Bold',
+  //               }}>
+  //               {item.title}
+  //             </Text>
+  //             <Text
+  //               style={{
+  //                 color: 'white',
+  //                 fontSize: 18,
+  //                 fontFamily: 'Sen-Regular',
+  //               }}>
+  //               {item.description}
+  //             </Text>
+  //             <Text
+  //               style={{
+  //                 color: 'white',
+  //                 fontSize: 18,
+  //                 fontFamily: 'Sen-Regular',
+  //               }}>
+  //               GB Nagar ,201306,U.P
+  //             </Text>
+  //           </TouchableOpacity>
+  //         </View>
+
+  //         <Image
+  //           ref={excludedImageRef}
+  //           source={require('../assets/w.png')}
+  //           resizeMode="contain"
+  //           style={{
+  //             width: '40%',
+  //             height: undefined,
+  //             aspectRatio: 1,
+  //             // backgroundColor:'red',
+  //             alignContent: 'flex-end',
+  //             position: 'absolute', //Here is the trick
+  //             bottom: '0%',
+  //             right: -10,
+  //           }}
+  //         />
+  //       </View>
+
+  //       <View style={[styles.row, {width: screenWidth}]}>
+  //         <TouchableOpacity
+  //           style={[styles.button, {backgroundColor: '#F08000'}]}
+  //           onPress={() => shareImage(index)}>
+  //           <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
+  //             {t('sharePhoto')}
+  //           </Text>
+  //         </TouchableOpacity>
+  //         <TouchableOpacity
+  //           style={[styles.button, {backgroundColor: '#C5C5C5'}]}
+  //           onPress={() => {
+  //             shareWithoutImage(index);
+  //           }}>
+  //           <Text style={{color: 'black', fontFamily: 'Sen-Bold'}}>
+  //             {t('shareWithoutPhoto')}
+  //           </Text>
+  //         </TouchableOpacity>
+  //         <TouchableOpacity
+  //           style={[styles.button, {backgroundColor: 'grey'}]}
+  //           onPress={() =>
+  //             props.navigation.navigate('EditScreen', {item: item})
+  //           }>
+  //           <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
+  //             {t('edit')}
+  //           </Text>
+  //         </TouchableOpacity>
+  //       </View>
+  //     </View>
+  //   );
+  // };
+
+  const renderItem = ({ item, index }) => {
     const Dheight = screenHeight * 0.8;
     return (
-      <View style={[styles.listItem, {height: Dheight}]}>
+      <View style={[styles.listItem, { height: Dheight }]}>
         <View
           style={styles.savedComponent}
-          //ref={viewRef}
-          ref={shot => (viewRef[`${index}`] = shot)}>
+          ref={shot => (viewRef[`${index}`] = shot)}
+        >
           <Image
-            //  source={require('../assets/bg1.png')}
-            source={{
-              uri: Globals.image_Url + item.img,
-            }}
+            source={{ uri: Globals.image_Url + item.img }}
             resizeMode="stretch"
-            style={{
-              width: '100%',
-              height: '80%',
-              // aspectRatio: 1,
-            }}
+            style={{ width: '100%', height: '80%' }}
           />
-
-          <View
-            style={{
-              backgroundColor: Globals.partyColor,
-              flexDirection: 'row',
-              width: '100%',
-              height: '20%',
-              position: 'absolute',
-              bottom: '0%',
-            }}>
-            <TouchableOpacity
-              style={{margin: 5, width: '65%'}}
-              activeOpacity={0.9}>
-              <Text style={{fontSize: 22, fontWeight: 'bold', color: 'white',      fontFamily: 'Sen-Bold',
-}}>
-                {item.title}
-              </Text>
-              <Text style={{color: 'white', fontSize: 18,      fontFamily: 'Sen-Regular',
-}}>
-                {item.description}
-              </Text>
-              <Text style={{color: 'white', fontSize: 18,fontFamily: 'Sen-Regular'}}>
-                GB Nagar ,201306,U.P
-              </Text>
+          <View style={styles.textContainer}>
+            <TouchableOpacity style={styles.textTouchable}>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.description}>{item.description}</Text>
+              <Text style={styles.address}>GB Nagar, 201306, U.P</Text>
             </TouchableOpacity>
           </View>
-
           <Image
             ref={excludedImageRef}
             source={require('../assets/w.png')}
             resizeMode="contain"
-            style={{
-              width: '40%',
-              height: undefined,
-              aspectRatio: 1,
-              // backgroundColor:'red',
-              alignContent: 'flex-end',
-              position: 'absolute', //Here is the trick
-              bottom: '0%',
-              right: -10,
-            }}
+            style={styles.excludedImage}
           />
         </View>
-
-        <View style={[styles.row,{width:screenWidth}]}>
+        <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={[styles.button, {backgroundColor: '#F08000'}]}
-            onPress={() => shareImage(index)}>
-            <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
-              {t('sharePhoto')}
-            </Text>
+            style={[styles.button, { backgroundColor: '#F08000' }]}
+            onPress={() => shareImage(index)}
+          >
+            <Text style={styles.buttonText}>{t('sharePhoto')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, {backgroundColor: '#C5C5C5'}]}
+            style={[styles.button, { backgroundColor: '#C5C5C5' }]}
             onPress={() => {
               shareWithoutImage(index);
-            }}>
-            <Text style={{color: 'black', fontFamily: 'Sen-Bold'}}>
-              {t('shareWithoutPhoto')}
-            </Text>
+            }}
+          >
+            <Text style={styles.buttonTextBlack}>{t('shareWithoutPhoto')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, {backgroundColor: 'grey'}]}
+            style={[styles.button, { backgroundColor: 'grey' }]}
             onPress={() =>
-              props.navigation.navigate('EditScreen', {item: item})
-            }>
-            <Text style={{color: 'white', fontFamily: 'Sen-Bold'}}>
-              {t('edit')}
-            </Text>
+              props.navigation.navigate('EditScreen', { item: item })
+            }
+          >
+            <Text style={styles.buttonText}>{t('edit')}</Text>
           </TouchableOpacity>
         </View>
-
       </View>
     );
   };
@@ -249,7 +317,7 @@ const HomeScreen = props => {
   return (
     <View style={styles.body}>
       {/* <StatusBar barStyle="dark-content" /> */}
-      <StatusBar barStyle="dark-content" backgroundColor='#F0F1F5' />
+      <StatusBar barStyle="dark-content" backgroundColor="#F0F1F5" />
 
       <ModalPopup modalVisible={modalVisible} />
 
@@ -265,11 +333,11 @@ const HomeScreen = props => {
           keyExtractor={(item, index) => index.toString()}
           refreshControl={
             <RefreshControl
-            refreshing={refreshing}
-            onRefresh={getBanners}
-            colors={['#0000ff']} // Android colors
-            tintColor={'#0000ff'} // iOS color
-          />
+              refreshing={refreshing}
+              onRefresh={getBanners}
+              colors={['#0000ff']} // Android colors
+              tintColor={'#0000ff'} // iOS color
+            />
           }
         />
       ) : (
@@ -294,52 +362,87 @@ const styles = StyleSheet.create({
     height: '80%',
     width: screenWidth,
     alignSelf: 'center',
-    // marginBottom: 30,
   },
-  text: {
-    textAlign: 'center',
+  textContainer: {
+    backgroundColor: Globals.partyColor,
+    flexDirection: 'row',
+    width: '100%',
+    height: '20%',
+    position: 'absolute',
+    bottom: '0%',
   },
-  image: {
-    width: 252,
-    height: 150,
-    alignSelf: 'center',
-    marginTop: 30,
-    marginBottom: 5,
+  textTouchable: {
+    margin: 5,
+    width: '65%',
   },
-  row: {
-    alignSelf: 'center',
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'white',
+    fontFamily: 'Sen-Bold',
+  },
+  description: {
+    color: 'white',
+    fontSize: 18,
+    fontFamily: 'Sen-Regular',
+  },
+  address: {
+    color: 'white',
+    fontSize: 18,
+    fontFamily: 'Sen-Regular',
+  },
+  excludedImage: {
+    width: '40%',
+    height: undefined,
+    aspectRatio: 1,
+    alignContent: 'flex-end',
+    position: 'absolute',
+    bottom: '0%',
+    right: -10,
+  },
+  buttonContainer: {
+    width: screenWidth,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
-    // marginTop: 45,
-    position: 'absolute',
-    // top: '70%',
-    bottom: '5%',
-    height: '8%',
-    backgroundColor: '#fff',
+    paddingHorizontal: 10,
+    marginVertical: 10,
   },
   button: {
-    backgroundColor: 'orange',
-    padding: 10,
-    paddingHorizontal: 15,
+    flex: 1,
+    marginHorizontal: 5,
+    paddingVertical: 5,
     borderRadius: 10,
     borderColor: 'white',
     borderWidth: 1,
     elevation: 5,
     height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontFamily: 'Sen-Bold',
+    textAlign: 'center',
+    flexShrink: 1, 
+    fontSize:11
+  },
+  buttonTextBlack: {
+    color: 'black',
+    fontFamily: 'Sen-Bold',
+    textAlign: 'center',
+    flexShrink: 1,
+    fontSize:11
+
   },
   listItem: {
     minHeight: 610,
     width: '100%',
-    // borderRadius: 10,
     alignSelf: 'center',
-    // margin: 10,
     elevation: 10,
     backgroundColor: '#fff',
     marginBottom: 40,
-    // alignItems: 'center',
-    // justifyContent: 'space-around',
   },
 });
+
 
 export default HomeScreen;

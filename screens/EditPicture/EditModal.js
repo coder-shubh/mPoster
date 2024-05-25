@@ -3,10 +3,10 @@ import { PermissionsAndroid, Platform } from "react-native";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Globals from "../../utils/Globals";
 
-export default function EditModal(){
-    const [FilePath, setFilePath] = useState(null);
-    const [visible, setVisible] = React.useState(false);
-
+export default function EditModal() {
+    const [filePaths, setFilePaths] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [selectedImage,setSelectedImage]=useState('');
 
     const requestCameraPermission = async () => {
         if (Platform.OS === 'android') {
@@ -18,13 +18,14 @@ export default function EditModal(){
                         message: 'App needs camera permission',
                     },
                 );
-                // If CAMERA Permission is granted
                 return granted === PermissionsAndroid.RESULTS.GRANTED;
             } catch (err) {
-                //  console.warn(err);
+                console.warn(err);
                 return false;
             }
-        } else return true;
+        } else {
+            return true;
+        }
     };
 
     const requestExternalWritePermission = async () => {
@@ -37,113 +38,113 @@ export default function EditModal(){
                         message: 'App needs write permission',
                     },
                 );
-                // If WRITE_EXTERNAL_STORAGE Permission is granted
                 return granted === PermissionsAndroid.RESULTS.GRANTED;
             } catch (err) {
-                console.log(err);
-                // alert('Write permission err', err);
+                console.error(err);
+                return false;
             }
-            return false;
-        } else return true;
+        } else {
+            return true;
+        }
     };
-
-
-
-    const captureImage = async (type) => {
-        let options = {
+    const updateFile = (type) => {
+        const options = {
             mediaType: type,
             maxWidth: 200,
             maxHeight: 200,
             quality: 2,
             videoQuality: 'low',
-            durationLimit: 30, //Video max duration in seconds
+            durationLimit: 30,
+            saveToPhotos: false,
+            includeBase64: false,
+            selectionLimit: 0,
+        };
+
+        launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+                return;
+            } else if (response.errorCode) {
+                console.error('Error: ', response.errorMessage || response.errorCode);
+                return;
+            }
+            const newUris = response.assets.map(asset => asset.uri);
+            setFilePaths(prevPaths => {
+                if (prevPaths.length > 0) {
+                    const updatedPaths = [...prevPaths];
+                    updatedPaths[updatedPaths.length - 1] = newUris[0];
+                    return updatedPaths;
+                }
+                return [...prevPaths, ...newUris];
+            });
+        });
+    };
+
+    const captureImage = async (type) => {
+        const options = {
+            mediaType: type,
+            maxWidth: 200,
+            maxHeight: 200,
+            quality: 2,
+            videoQuality: 'low',
+            durationLimit: 30,
             saveToPhotos: false,
             includeBase64: false,
         };
-        let isCameraPermitted = await requestCameraPermission();
-        let isStoragePermitted = await requestExternalWritePermission();
+
+        const isCameraPermitted = await requestCameraPermission();
+        const isStoragePermitted = await requestExternalWritePermission();
+
         if (isCameraPermitted && isStoragePermitted) {
             launchCamera(options, (response) => {
-                //   console.log('Response = ', response);
-
                 if (response.didCancel) {
                     console.log('User cancelled camera picker');
                     return;
-                } else if (response.errorCode == 'camera_unavailable') {
-                    console.log('Camera not available on device');
-                    return;
-                } else if (response.errorCode == 'permission') {
-                    console.log('Permission not satisfied');
-                    return;
-                } else if (response.errorCode == 'others') {
-                    console.log(response.errorMessage);
+                } else if (response.errorCode) {
+                    console.error('Error: ', response.errorMessage || response.errorCode);
                     return;
                 }
-                console.log("%%%%%&&&&*", response.assets[0].base64)
-                console.log('uri -> ', response.uri);
-                console.log('width -> ', response.width);
-                console.log('height -> ', response.height);
-                console.log('fileSize -> ', response.fileSize);
-                console.log('type -> ', response.type);
-                console.log('fileName -> ', response.fileName);
-                console.log("%%%%%&&&&*", Globals._Base64String)
-                var arr = [];
-                arr.push(response.assets[0])
-                setFilePath(arr[0].uri);
-                console.log(arr[0].uri)
+                const asset = response.assets[0];
+                setFilePaths([...filePaths, asset.uri]);
             });
         }
     };
 
-
     const chooseFile = (type) => {
-        let options = {
+        const options = {
             mediaType: type,
             maxWidth: 200,
             maxHeight: 200,
             quality: 2,
             videoQuality: 'low',
-            durationLimit: 30, //Video max duration in seconds
+            durationLimit: 30,
             saveToPhotos: false,
             includeBase64: false,
+            selectionLimit: 0, // Set to 0 for multiple selection
         };
-        launchImageLibrary(options, (response) => {
-            console.log('Response = ', response);
 
+        launchImageLibrary(options, (response) => {
             if (response.didCancel) {
-                console.log('User cancelled camera picker');
+                console.log('User cancelled image picker');
                 return;
-            } else if (response.errorCode == 'camera_unavailable') {
-                console.log('Camera not available on device');
-                return;
-            } else if (response.errorCode == 'permission') {
-                console.log('Permission not satisfied');
-                return;
-            } else if (response.errorCode == 'others') {
-                console.log(response.errorMessage);
+            } else if (response.errorCode) {
+                console.error('Error: ', response.errorMessage || response.errorCode);
                 return;
             }
-            console.log('base64 -> ', "_________");
-            console.log('uri -> ', response.assets[0].uri);
-            console.log('width -> ', response.width);
-            console.log('height -> ', response.height);
-            console.log('fileSize -> ', response.assets[0].fileSize);
-            console.log('type -> ', response.type);
-            console.log('fileName -> ', response.assets[0].fileName);
-            var arr = [];
-            arr.push(response.assets[0])
-            setFilePath(arr[0].uri);
+            const newUris = response.assets.map(asset => asset.uri);
+            setFilePaths([...filePaths, ...newUris]);
         });
     };
 
-
-    return{
-        FilePath,
-        setFilePath,
+    return {
+        filePaths,
+        setFilePaths,
         captureImage,
         chooseFile,
         visible,
-        setVisible
-
-    }
+        setVisible,
+        setSelectedImage,
+        selectedImage,
+        updateFile
+    };
 }
