@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {postApiCall} from '../../utils/ApiHandler';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 
 export default function SignUpModal() {
   const [user, setUser] = useState({
@@ -30,27 +30,27 @@ export default function SignUpModal() {
 
   const handleSignUp = async () => {
     if (!user.firstName.trim()) {
-      Alert.alert("FirstName","Please enter firstname");
+      Alert.alert('FirstName', 'Please enter firstname');
       return;
     }
     if (!user.lastName.trim()) {
-      Alert.alert("LastName","Please enter lastname");
+      Alert.alert('LastName', 'Please enter lastname');
       return;
     }
     if (!user.contactNumber.trim()) {
-      Alert.alert("Contact Number","Please enter contact number");
+      Alert.alert('Contact Number', 'Please enter contact number');
       return;
     }
     if (!user.Address.trim()) {
-      Alert.alert("Address","Please enter address");
+      Alert.alert('Address', 'Please enter address');
       return;
     }
     if (!isValidEmail) {
-      Alert.alert("Email","Please enter email");
+      Alert.alert('Email', 'Please enter email');
       return;
     }
     if (!user.password.trim()) {
-      Alert.alert("Password","Please enter password");
+      Alert.alert('Password', 'Please enter password');
       return;
     }
 
@@ -66,9 +66,15 @@ export default function SignUpModal() {
       setModalVisible(true);
 
       let res = await postApiCall({url: 'User/UserRegister', json: info});
-      if (res.StatusCode==1) {
-        navigation.goBack();
-        console.log(res);
+      if (res.StatusCode == 1) {
+        Alert.alert('mPoster', 'Sign Up Sucessfully!', [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => navigation.goBack()},
+        ]);
       } else {
         console.log(res);
       }
