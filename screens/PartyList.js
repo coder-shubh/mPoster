@@ -53,7 +53,6 @@ const PartyList = props => {
         AsyncStorage.setItem('partyColor', partyColor.toString());
         Globals.PartyId = PId;
         Globals.partyColor = partyColor;
-        alert('hi')
         if (Globals.PartyId) {
           props.navigation.reset({index: 0, routes: [{name: 'Dashboard'}]});
         }
