@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Image,
@@ -13,6 +13,7 @@ import EditModal from './EditModal';
 import MaterialIcons from 'react-native-vector-icons/FontAwesome';
 import {Colors} from '../../utils/Colors';
 import DeletePopUp from '../../Component/DeletePopUp';
+import Globals from '../../utils/Globals';
 
 const {width} = Dimensions.get('window');
 
@@ -24,6 +25,11 @@ export default function EditProfileScreen({navigation}) {
   const onStateChange = ({open}) => setState({open});
   const {open} = state;
 
+  useEffect(() => {
+    viewModal.getAllUserPic();
+    viewModal.getUserDefaultPic();
+  }, []);
+
   const renderItem = ({item}) => (
     <TouchableOpacity
       style={{
@@ -34,15 +40,29 @@ export default function EditProfileScreen({navigation}) {
       }}
       activeOpacity={0.8}
       onPress={() => {
-        viewModal.setSelectedImage(item);
+        viewModal.filePaths.length>0
+          ? viewModal.setSelectedImage(item)
+          : viewModal.setSelectedImage(Globals.image_Url+item?.fileUrl);
       }}>
       <Image
         style={{height: '100%', width: '100%', borderRadius: 10}}
         resizeMode="cover"
-        source={{uri: item}}
+        source={{
+          uri: viewModal.filePaths.length>0? item:
+           Globals.image_Url + item?.fileUrl,
+        }}
       />
     </TouchableOpacity>
   );
+
+
+  const setDefaultImage=()=>{
+    if(viewModal.filePaths>0){
+      return viewModal.selectedImage
+    }else{
+      return Globals.image_Url+viewModal.selectedImage
+    }
+  }
 
   return (
     <PaperProvider>
@@ -55,7 +75,7 @@ export default function EditProfileScreen({navigation}) {
         Cancle={() => viewModal.setVisible(false)}
       />
 
-      {viewModal.filePaths?.length > 0 ? (
+      {viewModal.filePaths?.length > 0 || viewModal.images.length > 0 ? (
         <View style={{flex: 1}}>
           <View style={{height: '40%', width: '100%'}}>
             <Image
@@ -63,7 +83,7 @@ export default function EditProfileScreen({navigation}) {
               resizeMode="cover"
               source={{
                 uri: viewModal.selectedImage
-                  ? viewModal.selectedImage
+                  ? setDefaultImage
                   : viewModal.filePaths[0],
               }}
             />
@@ -92,7 +112,7 @@ export default function EditProfileScreen({navigation}) {
             Saved Profile Pictures:
           </Text>
           <FlatList
-            data={viewModal.filePaths}
+            data={viewModal.filePaths.length>0 ? viewModal.filePaths : viewModal.images}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
             numColumns={3}

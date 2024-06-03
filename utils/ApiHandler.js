@@ -100,3 +100,40 @@ export function putApiCall(param){
   });
 }
 
+
+export function postCall(param) {
+  const AuthStr = 'Basic'.concat('App1app#123'); 
+  var url = param.url;
+  var data = param.data;
+  var isFormData = param.isFormData;
+
+  let headers = {
+      'Authorization': AuthStr,
+      'ApiVersion': Globals.ApiVersion
+  };
+
+  if (!isFormData) {
+      headers['Content-Type'] = 'application/json';
+  } else {
+      // For FormData, the browser will automatically set the correct Content-Type including the boundary
+      // You don't need to set 'Content-Type' header explicitly
+  }
+
+  console.log("____________________________");
+  console.log(url);
+  console.log(Globals.API_URL.concat(url));
+  console.log(data);
+
+  return axios.post(Globals.API_URL.concat(url), data, { headers: headers })
+      .then((response) => {
+          return response.data;
+      })
+      .catch(error => {
+          if (error.toJSON().message === 'Network Error') {
+              alert('no internet connection');
+              // dispatch({type: RELOAD}); // Assuming dispatch is available in the scope
+          }
+          return error;
+      });
+}
+
