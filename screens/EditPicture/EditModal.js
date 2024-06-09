@@ -137,42 +137,47 @@ export default function EditModal() {
         return;
       }
       const newUris = response?.assets.map(asset => asset.uri);
-      setFilePaths([...filePaths, ...newUris]);
+      // setFilePaths([...filePaths, ...newUris]);
       uploadImage(response.assets);
+      console.log(response);
     });
   };
 
   const uploadImage = async image => {
     const formdata = new FormData();
-    formdata.append("id", "1");
-    formdata.append("fileType", "uProfile");
-    formdata.append("userId", Globals.UrCode);
-    formdata.append("images", Platform.OS === 'android'
-          ? image[0].uri
-          : image[0].uri.replace('file://', ''));
-          console.log(JSON.stringify(formdata));
+    const photo = image[0];
+    formdata.append('images', {
+      name: photo.fileName,
+      type: photo.type,
+      uri: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri,
+    });
+
     const requestOptions = {
-      method: "POST",
+      method: 'POST',
       body: formdata,
-      redirect: "follow"
+      headers: {
+        'Content-Type': 'multipart/form-data; ',
+      },
     };
-    
-    fetch("http://103.97.197.49/PosterApp/Api/user/UploadUserPic?id=1&fileType=uProfile&userId="+Globals.UrCode, requestOptions)
-      .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.error(error));
+
+    fetch(
+      'http://103.97.197.49/PosterApp/Api/user/UploadUserPic?id=1&fileType=uProfile&userId=' +
+        Globals.UrCode,
+      requestOptions,
+    )
+      .then(response => response.json())
+      .then(result => getAllUserPic())
+      .catch(error => console.error(error));
   };
 
   const getAllUserPic = async () => {
     try {
       setModalVisible(true);
-
       let res = await getApiCall({
         url: 'user/getAllUserPic?userId=' + Globals.UrCode,
       });
       if (res?.StatusCode == 1) {
-        setImages(res?.ResultData);
-        console.log(res?.ResultData)
+        setFilePaths(res?.ResultData);
       }
     } catch (e) {
       alert(e);
@@ -186,17 +191,45 @@ export default function EditModal() {
       setModalVisible(true);
 
       let res = await getApiCall({
-        url: 'user/getUserDefaultPic?userId='+Globals.UrCode
+        url: 'user/getUserDefaultPic?userId=' + Globals.UrCode,
       });
       if (res?.StatusCode == 1) {
         setSelectedImage(res?.ResultData);
-        console.log('reywriyweiuryiwu',res?.ResultData)
+        console.log('reywriyweiuryiwu', res?.ResultData);
       }
     } catch (e) {
       alert(e);
     } finally {
       setModalVisible(false);
     }
+  };
+
+  const SetUserPicDefault = async image => {
+    console.log('rillllllle', image);
+
+    const formdata = new FormData();
+    formdata.append('images', {
+      FileName: image?.fileName,
+      fileType: 'uProfile',
+      userId: Globals.UrCode,
+    });
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data; ',
+      },
+    };
+
+    fetch(
+      'http://103.97.197.49/PosterApp/Api/user/SetUserPicDefault?FileName=' +
+        image?.fileName +
+        '&fileType=uProfile&userId=' +
+        Globals.UrCode,
+      requestOptions,
+    )
+      .then(response => response.json())
+      .then(result => getUserDefaultPic())
+      .catch(error => console.error(error));
   };
   return {
     filePaths,
@@ -210,6 +243,8 @@ export default function EditModal() {
     updateFile,
     getAllUserPic,
     images,
-    getUserDefaultPic
+    getUserDefaultPic,
+    modalVisible,
+    SetUserPicDefault,
   };
 }
