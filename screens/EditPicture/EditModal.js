@@ -194,7 +194,7 @@ export default function EditModal() {
         url: 'user/getUserDefaultPic?userId=' + Globals.UrCode,
       });
       if (res?.StatusCode == 1) {
-        setSelectedImage(res?.ResultData);
+        setSelectedImage(res?.ResultData[0]?.fileUrl);
         console.log('reywriyweiuryiwu', res?.ResultData);
       }
     } catch (e) {

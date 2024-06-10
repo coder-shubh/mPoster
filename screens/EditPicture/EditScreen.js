@@ -72,14 +72,14 @@ export default function EditProfileScreen({navigation}) {
       />
       <ModalPopup modalVisible={viewModal.modalVisible} />
 
-      {viewModal.filePaths?.length > 0 || viewModal.images.length > 0 ? (
+      {viewModal.filePaths?.length > 0 || viewModal.selectedImage ? (
         <View style={{flex: 1}}>
           <View style={{height: '40%', width: '100%'}}>
             <Image
               style={{height: '100%', width: '100%'}}
               resizeMode="cover"
               source={{
-                uri: setDefaultImage
+                uri:viewModal.selectedImage && Globals.image_Url+viewModal.selectedImage
               }}
             />
           </View>
