@@ -53,7 +53,7 @@ export default function PurchaseScreen() {
             flexDirection: 'row',
             alignItems: 'center',
             padding: 15,
-            backgroundColor: value != 'first' && '#fff',
+            backgroundColor: value != 'first' && theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack,
           },
         ]}
         activeOpacity={0.5}
@@ -109,12 +109,13 @@ export default function PurchaseScreen() {
           borderRadius: 10,
           alignSelf: 'center',
           alignItems: 'center',
-          backgroundColor: '#fff',
           borderWidth: 2,
           borderColor: value == 'second' ? Colors.orange : '#fff',
           marginTop: 10,
           flexDirection: 'row',
           padding: 15,
+          backgroundColor: theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack,
+
         }}
         activeOpacity={0.5}
         onPress={() => {
@@ -137,7 +138,7 @@ export default function PurchaseScreen() {
           </Text>
           <Text
             style={{
-              color: Colors.blackText,
+              color: theme === 'light' ? Colors.blackText : Colors.whiteText,
               fontSize: 15,
               fontFamily: 'Sen-Regular',
             }}>

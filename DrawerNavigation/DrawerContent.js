@@ -30,7 +30,6 @@ export function DrawerContent(props) {
   const {language, changeLanguage} = useLanguage();
   const [switchTheme, setSwitchTheme] = useState(false);
   const {theme, toggleTheme} = useTheme();
-  const style = globalStyles();
   const [languageOptionsVisible, setLanguageOptionsVisible] = useState(false);
   const {t} = useTranslation();
 
@@ -38,7 +37,20 @@ export function DrawerContent(props) {
     setSwitchTheme(isOn);
     toggleTheme(isOn);
   };
+  useEffect(() => {
+    const loadTheme = async () => {
+      try {
+        const storedTheme = await AsyncStorage.getItem('theme');
+        if (storedTheme) {
+          setSwitchTheme(storedTheme);
+        }
+      } catch (error) {
+        console.error('Failed to load theme from storage', error);
+      }
+    };
 
+    loadTheme();
+  }, []);
 
   const resetToScreen = (navigation, screenName) => {
     navigation.dispatch(

@@ -15,12 +15,15 @@ import {getApiCall, postApiCall} from '../utils/ApiHandler';
 import Globals from '../utils/Globals';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalPopup from '../Component/ModalPopup';
+import {useTheme} from '../Component/ThemeProvider';
+import {Colors} from '../utils/Colors';
 
 const PartyList = props => {
   const [data, setData] = useState([]);
   const {t, i18n} = useTranslation();
   const [modalVisible, setModalVisible] = useState(false);
-  const [userId, setuserId] = useState('');
+  const {theme} = useTheme();
+
   useEffect(() => {
     getPartyList();
   }, []);
@@ -82,7 +85,13 @@ const PartyList = props => {
   const renderItem = React.useCallback(({item, index}) => {
     return (
       <TouchableOpacity
-        style={styles.listItem}
+        style={[
+          styles.listItem,
+          {
+            backgroundColor:
+              theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack,
+          },
+        ]}
         activeOpacity={0.9}
         onPress={() => SetParty(item.PId, item.partyColor)}>
         <Image
@@ -96,7 +105,7 @@ const PartyList = props => {
           style={{
             fontSize: 22,
             fontFamily: 'Sen-Bold',
-            color: 'grey',
+            color: theme === 'light' ? Colors.greyText : Colors.whiteText,
             marginLeft: 20,
           }}>
           {t(item.title)}
@@ -106,8 +115,20 @@ const PartyList = props => {
   });
 
   return (
-    <View style={styles.body}>
-      <StatusBar barStyle="dark-content" />
+    <View
+      style={[
+        styles.body,
+        {
+          backgroundColor:
+            theme === 'light' ? Colors.primaryTheme : Colors.secondaryBlack,
+        },
+      ]}>
+      <StatusBar
+        barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+        backgroundColor={
+          theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack
+        }
+      />
       <ModalPopup modalVisible={modalVisible} />
 
       <FlatList
@@ -130,7 +151,6 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    backgroundColor: '#F8F8F8',
   },
   savedComponent: {
     backgroundColor: 'green',

@@ -42,6 +42,14 @@ const EditScreen = props => {
   const {theme} = useTheme();
 
   useEffect(() => {
+    props.navigation.setOptions({
+      headerStyle: { backgroundColor: theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack, }, 
+      headerTintColor: theme === 'light'
+      ? Colors.blackText
+      : Colors.whiteText,
+    });
+  }, [props.navigation]);
+  useEffect(() => {
     setTitle(item.title);
     setDescription(item.description);
   }, []);
@@ -124,7 +132,7 @@ const EditScreen = props => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={theme === 'light'?"dark-content":"light-content"} backgroundColor={theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack} />
       <SafeAreaView style={styles.keyboardAvoidingContainer}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -187,7 +195,7 @@ const EditScreen = props => {
                         fontSize: 18,
                         fontFamily: 'Sen-Regular',
                       }}>
-                      {subtitle}
+                      {description}
                     </Text>
                     {/* <Text style={{color: 'white', fontSize: 18,fontFamily: 'Sen-Regular'}}>
                       GB Nagar ,201306,U.P

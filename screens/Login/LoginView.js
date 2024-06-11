@@ -26,11 +26,13 @@ import {
 } from '@react-native-google-signin/google-signin';
 import ModalPopup from '../../Component/ModalPopup';
 import {useEffect} from 'react';
+import { useTheme } from '../../Component/ThemeProvider';
 
 export default function LoginView({navigation}) {
   const styles = globalStyles();
   const viewModal = LoginModel();
   const {t} = useTranslation();
+  const {theme} = useTheme();
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -45,7 +47,7 @@ export default function LoginView({navigation}) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#F0F1F5" />
+      <StatusBar barStyle={theme === 'light'?"dark-content":"light-content"} backgroundColor={theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack} />
       <ModalPopup modalVisible={viewModal.modalVisible} />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

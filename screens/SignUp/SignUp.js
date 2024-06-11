@@ -12,12 +12,14 @@ import SignUpModal from './SignUpModal';
 import { setI18n, useTranslation } from 'react-i18next';
 import { postApiCall } from '../../utils/ApiHandler';
 import ModalPopup from '../../Component/ModalPopup';
+import { useTheme } from '../../Component/ThemeProvider';
 
  
 export default function SignUp({navigation}) {
   const styles = globalStyles();
   const viewModal = SignUpModal();
   const { t, i18n } = useTranslation();
+  const {theme} = useTheme();
 
 
 
@@ -25,7 +27,7 @@ export default function SignUp({navigation}) {
     <ScrollView>
     <View style={styles.container}>
     <ModalPopup modalVisible={viewModal.modalVisible}/>
-    <StatusBar barStyle="dark-content" backgroundColor='#F0F1F5' />
+    <StatusBar barStyle={theme === 'light'?"dark-content":"light-content"} backgroundColor={theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack} />
 
       <Text style={[styles.title, {left: '5%', marginTop: '40%'}]}>
       {t('Welcome!')}

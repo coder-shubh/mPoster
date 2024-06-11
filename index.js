@@ -31,7 +31,6 @@ GoogleSignin.configure({
       profileImageSize: 120,
       scopes: ['profile', 'email']
 });
-
 const Main = () => (
     <LanguageProvider>
       <App />

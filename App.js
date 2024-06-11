@@ -6,42 +6,46 @@ import HomeScreen from './screens/HomeScreen';
 import EditScreen from './screens/EditScreen';
 import PartyList from './screens/PartyList';
 import LoginView from './screens/Login/LoginView';
-import {ThemeProvider} from './Component/ThemeProvider';
+import {ThemeProvider, useTheme} from './Component/ThemeProvider';
 import SignUp from './screens/SignUp/SignUp';
-import {LanguageProvider} from './Component/LanguageProvider ';
 import LanguageSelection from './screens/LanguageSelection';
 import EditProfileScreen from './screens/EditPicture/EditScreen';
 import SplashScreen from './screens/SplashScreen';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { DrawerContent } from './DrawerNavigation/DrawerContent';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {DrawerContent} from './DrawerNavigation/DrawerContent';
 import PurchaseScreen from './screens/PurchaseScreen';
-import { useWindowDimensions } from 'react-native';
+import {useWindowDimensions} from 'react-native';
+import { Colors } from './utils/Colors';
 
 const Stack = createNativeStackNavigator();
 const DrawerNav = createDrawerNavigator();
 
-
-
-const Dashboard = ({ navigation }) => {
+const Dashboard = ({navigation}) => {
   const dimensions = useWindowDimensions();
+  const {theme} = useTheme();
 
   return (
     <DrawerNav.Navigator
       useLegacyImplementation
       initialRouteName="HomeScreen"
-screenOptions={{drawerPosition:'right',drawerType: dimensions.width >= 768 ? 'permanent' : 'front',}}      
-      drawerContent={(props) => <DrawerContent {...props} />}
-    >
+      screenOptions={{
+        drawerPosition: 'right',
+        drawerType: dimensions.width >= 768 ? 'permanent' : 'front',
+        headerStyle: { backgroundColor: theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack, }, 
+          headerTintColor: theme === 'light'
+          ? Colors.blackText
+          : Colors.whiteText,
+      }}
+      drawerContent={props => <DrawerContent {...props} />}>
       <DrawerNav.Screen name="HomeScreen" component={HomeScreen} />
-      <DrawerNav.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <DrawerNav.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+      />
       <DrawerNav.Screen name="PurchaseScreen" component={PurchaseScreen} />
     </DrawerNav.Navigator>
   );
 };
-
-
-
-
 
 const App = ({navigation}) => {
   return (

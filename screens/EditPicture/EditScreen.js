@@ -6,6 +6,7 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import globalStyles from '../../Component/Styles/globalStyles';
 import {FAB, Portal, PaperProvider, Button} from 'react-native-paper';
@@ -16,6 +17,7 @@ import DeletePopUp from '../../Component/DeletePopUp';
 import Globals from '../../utils/Globals';
 import ModalPopup from '../../Component/ModalPopup';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../../Component/ThemeProvider';
 
 const {width} = Dimensions.get('window');
 
@@ -68,7 +70,7 @@ export default function EditProfileScreen({navigation}) {
   };
 
   return (
-    <PaperProvider theme={themes}>
+    <PaperProvider theme={theme === 'light' ? Colors.primaryTheme : Colors.secondaryBlack}>
       <DeletePopUp
         show={viewModal.visible}
         press={() => {
@@ -78,9 +80,10 @@ export default function EditProfileScreen({navigation}) {
         Cancle={() => viewModal.setVisible(false)}
       />
       <ModalPopup modalVisible={viewModal.modalVisible} />
+      <StatusBar barStyle={theme === 'light'?"dark-content":"light-content"} backgroundColor={theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack} />
 
       {viewModal.filePaths?.length > 0 || viewModal.selectedImage ? (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1,backgroundColor:theme === 'light' ? Colors.primaryTheme : Colors.secondaryBlack}}>
           <View style={{height: '40%', width: '100%'}}>
             <Image
               style={{height: '100%', width: '100%'}}

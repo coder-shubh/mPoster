@@ -2,9 +2,13 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import UserAvatar from 'react-native-user-avatar';
+import { useTheme } from './ThemeProvider';
+import { Colors } from '../utils/Colors';
 
 export default function MainHeader({title}) {
   const navigation = useNavigation();
+  const {theme} = useTheme();
+
   const openDrawer = () => {
     navigation.openDrawer();
   };
@@ -15,9 +19,10 @@ export default function MainHeader({title}) {
         height: 50,
         width: '100%',
         paddingHorizontal: 10,
-        paddingVertical:5,
+        paddingVertical: 5,
         justifyContent: 'flex-end',
-        flexDirection:'row'
+        flexDirection: 'row',
+        backgroundColor: theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack,
       }}>
       <TouchableOpacity
         style={{
@@ -29,9 +34,8 @@ export default function MainHeader({title}) {
         onPress={() => {
           openDrawer();
         }}>
-                  <UserAvatar size={40} name="Shubham Singh" />
-
-        </TouchableOpacity>
+        <UserAvatar size={40} name="Shubham Singh" />
+      </TouchableOpacity>
     </View>
   );
 }

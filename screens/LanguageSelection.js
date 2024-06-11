@@ -2,14 +2,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useLanguage } from '../Component/LanguageProvider ';
 import { Colors } from '../utils/Colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LanguageSelection = ({ navigation }) => {
   const { language, changeLanguage } = useLanguage();
 
   const handleLanguageChange = (newLanguage) => {
     changeLanguage(newLanguage);
-    AsyncStorage.setItem('language', newLanguage.toString());
+    // AsyncStorage.setItem('language', newLanguage.toString());
     navigation.replace('LoginView')
   };
 

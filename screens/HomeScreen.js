@@ -22,6 +22,9 @@ import Globals from '../utils/Globals';
 import {useTranslation} from 'react-i18next';
 import ModalPopup from '../Component/ModalPopup';
 import MainHeader from '../Component/MainHeader';
+import globalStyles from '../Component/Styles/globalStyles';
+import { Colors } from '../utils/Colors';
+import { useTheme } from '../Component/ThemeProvider';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
@@ -31,6 +34,8 @@ const HomeScreen = props => {
   const {t} = useTranslation();
   const excludedImageRef = useRef();
   const [refreshing, setRefreshing] = useState(false);
+  const style = globalStyles();
+  const {theme} = useTheme();
 
   useEffect(() => {
     getBanners();
@@ -261,7 +266,7 @@ const HomeScreen = props => {
   const renderItem = ({item, index}) => {
     const Dheight = screenHeight * 0.8;
     return (
-      <View style={[styles.listItem, {height: Dheight}]}>
+      <View style={[style.listItem, {height: Dheight}]}>
         <View
           style={styles.savedComponent}
           ref={shot => (viewRef[`${index}`] = shot)}>
@@ -274,7 +279,7 @@ const HomeScreen = props => {
             <TouchableOpacity style={styles.textTouchable}>
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.description}>{item.description}</Text>
-              <Text style={styles.address}>GB Nagar, 201306, U.P</Text>
+              {/* <Text style={styles.address}>GB Nagar, 201306, U.P</Text> */}
             </TouchableOpacity>
           </View>
           <Image
@@ -310,8 +315,8 @@ const HomeScreen = props => {
   };
 
   return (
-    <View style={styles.body}>
-      <StatusBar barStyle="dark-content" backgroundColor="#F0F1F5" />
+    <View style={style.container}>
+      {/* <StatusBar barStyle={theme === 'light'?"dark-content":"light-content"} backgroundColor={theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack} /> */}
 
       <ModalPopup modalVisible={modalVisible} />
 
@@ -426,14 +431,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flexShrink: 1,
     fontSize: 11,
-  },
-  listItem: {
-    minHeight: 610,
-    width: '100%',
-    alignSelf: 'center',
-    elevation: 10,
-    backgroundColor: '#fff',
-    marginBottom: 40,
   },
 });
 

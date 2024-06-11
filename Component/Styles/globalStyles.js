@@ -104,6 +104,14 @@ const globalStyles = () => {
       borderRadius: 50,
       marginTop: 10,
     },
+    listItem: {
+      minHeight: 610,
+      width: '100%',
+      alignSelf: 'center',
+      elevation: 10,
+      backgroundColor:  theme === 'light' ? Colors.primaryTheme : Colors.secondaryBlack,
+      marginBottom: 40,
+    },
   });
 };
 

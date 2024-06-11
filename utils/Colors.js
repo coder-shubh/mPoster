@@ -8,7 +8,7 @@ export const Colors = {
     greyText: '#A4A8AB',
     purple: '#6234CD',
     primaryBlack : '#1B1F22',
-    secondaryBlack: '#1F2326',
+    // secondaryBlack: '#1F2326',
     Iris:'#5D3FD3',
     InputBckColor:'#EDEADE',
     orange:'#CC5500'
