@@ -27,6 +27,7 @@
   "purchase": "Purchase Screen",
   "changelist": "Change Party",
   "logout": "Logout",
+  "no_Content":"No Content",
 
   "firstPlan": "12 months",
   "secondPlan": "/month",

@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   FlatList,
   View,
@@ -259,18 +258,17 @@ const HomeScreen = props => {
   //   );
   // };
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({item, index}) => {
     const Dheight = screenHeight * 0.8;
     return (
-      <View style={[styles.listItem, { height: Dheight }]}>
+      <View style={[styles.listItem, {height: Dheight}]}>
         <View
           style={styles.savedComponent}
-          ref={shot => (viewRef[`${index}`] = shot)}
-        >
+          ref={shot => (viewRef[`${index}`] = shot)}>
           <Image
-            source={{ uri: Globals.image_Url + item.img }}
+            source={{uri: Globals.image_Url + item.img}}
             resizeMode="stretch"
-            style={{ width: '100%', height: '80%' }}
+            style={{width: '100%', height: '80%'}}
           />
           <View style={styles.textContainer}>
             <TouchableOpacity style={styles.textTouchable}>
@@ -288,25 +286,22 @@ const HomeScreen = props => {
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: '#F08000' }]}
-            onPress={() => shareImage(index)}
-          >
+            style={[styles.button, {backgroundColor: '#F08000'}]}
+            onPress={() => shareImage(index)}>
             <Text style={styles.buttonText}>{t('sharePhoto')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: '#C5C5C5' }]}
+            style={[styles.button, {backgroundColor: '#C5C5C5'}]}
             onPress={() => {
               shareWithoutImage(index);
-            }}
-          >
+            }}>
             <Text style={styles.buttonTextBlack}>{t('shareWithoutPhoto')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: 'grey' }]}
+            style={[styles.button, {backgroundColor: 'grey'}]}
             onPress={() =>
-              props.navigation.navigate('EditScreen', { item: item })
-            }
-          >
+              props.navigation.navigate('EditScreen', {item: item})
+            }>
             <Text style={styles.buttonText}>{t('edit')}</Text>
           </TouchableOpacity>
         </View>
@@ -334,14 +329,14 @@ const HomeScreen = props => {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={getBanners}
-              colors={['#0000ff']} // Android colors
-              tintColor={'#0000ff'} // iOS color
+              colors={['#0000ff']}
+              tintColor={'#0000ff'}
             />
           }
         />
       ) : (
         <Text style={{textAlign: 'center', top: '50%', fontFamily: 'Sen-Bold'}}>
-          No Content
+          {t('no_Content')}
         </Text>
       )}
     </View>
@@ -422,16 +417,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Sen-Bold',
     textAlign: 'center',
-    flexShrink: 1, 
-    fontSize:11
+    flexShrink: 1,
+    fontSize: 11,
   },
   buttonTextBlack: {
     color: 'black',
     fontFamily: 'Sen-Bold',
     textAlign: 'center',
     flexShrink: 1,
-    fontSize:11
-
+    fontSize: 11,
   },
   listItem: {
     minHeight: 610,
@@ -442,6 +436,5 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
 });
-
 
 export default HomeScreen;
