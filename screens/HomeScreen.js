@@ -316,7 +316,6 @@ const HomeScreen = props => {
 
   return (
     <View style={styles.body}>
-      {/* <StatusBar barStyle="dark-content" /> */}
       <StatusBar barStyle="dark-content" backgroundColor="#F0F1F5" />
 
       <ModalPopup modalVisible={modalVisible} />

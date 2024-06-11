@@ -40,8 +40,22 @@
   "imageDescription": "अपनी फ़ोटो को अपने दोस्तों और परिवार के साथ साझा करें",
   "sharePhoto": "फोटो के साथ साझा करें",
   "shareWithoutPhoto": "बिना फोटो के साझा करें",
-  "edit": "संपादित करें"
+  "edit": "संपादित करें",
 
-
+  "EditProfile":{
+    "saved_Profile_Pictures":"सहेजे गए प्रोफ़ाइल चित्र:",
+    "upload_Your_Image":"अपनी छवि अपलोड करें",
+    "remove_Images":"छवियाँ हटाएँ",
+    "gallery":"गैलरी",
+    "change_Photo":"छवि बदलो",
+    "change_Party":"पार्टी बदलो"
+  },
+  "EditBanner":{
+    "edit_Content":"सामग्री संपादित करें",
+    "save":"जमा",
+    "description":"विवरण",
+    "title":"शीर्षक",
+    "close":"बंद"
+  }
   }
   

@@ -22,7 +22,6 @@ import {captureRef} from 'react-native-view-shot';
 
 import Share from 'react-native-share';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
-import Draggable from 'react-native-draggable';
 import {DragResizeBlock} from 'react-native-drag-resize';
 import Globals from '../utils/Globals';
 import {useTranslation} from 'react-i18next';
@@ -178,16 +177,21 @@ const EditScreen = props => {
                       style={{
                         fontSize: 22,
                         fontFamily: 'Sen-Bold',
-                                                color: 'white',
+                        color: 'white',
                       }}>
                       {title}
                     </Text>
-                    <Text style={{color: 'white', fontSize: 18,fontFamily: 'Sen-Regular'}}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontSize: 18,
+                        fontFamily: 'Sen-Regular',
+                      }}>
                       {subtitle}
                     </Text>
-                    <Text style={{color: 'white', fontSize: 18,fontFamily: 'Sen-Regular'}}>
+                    {/* <Text style={{color: 'white', fontSize: 18,fontFamily: 'Sen-Regular'}}>
                       GB Nagar ,201306,U.P
-                    </Text>
+                    </Text> */}
                   </TouchableOpacity>
                 </View>
                 {/* <Image
@@ -222,9 +226,7 @@ const EditScreen = props => {
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: '#F08000'}]}
                   onPress={() => shareImage()}>
-                  <Text style={styles.buttonText}>
-                    {t('sharePhoto')}
-                  </Text>
+                  <Text style={styles.buttonText}>{t('sharePhoto')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.button, {backgroundColor: '#C5C5C5'}]}
@@ -238,9 +240,7 @@ const EditScreen = props => {
                   // onPress={() =>
                   //   props.navigation.navigate('EditScreen', {rowItem: item})}
                 >
-                  <Text style={styles.buttonText}>
-                    {t('edit')}
-                  </Text>
+                  <Text style={styles.buttonText}>{t('edit')}</Text>
                 </TouchableOpacity>
               </View>
 
@@ -266,7 +266,7 @@ const EditScreen = props => {
                               : Colors.whiteText,
                         },
                       ]}>
-                      Edit Content
+                      {t('EditBanner.edit_Content')}
                     </Text>
 
                     <TextInput
@@ -279,7 +279,7 @@ const EditScreen = props => {
                               : Colors.whiteText,
                         },
                       ]}
-                      placeholder="Title"
+                      placeholder={t('EditBanner.title')}
                       value={title}
                       onChangeText={setTitle}
                       placeholderTextColor={Colors.greyText}
@@ -297,7 +297,7 @@ const EditScreen = props => {
                           textAlignVertical: 'top',
                         },
                       ]}
-                      placeholder="Description"
+                      placeholder={t('EditBanner.description')}
                       value={description}
                       onChangeText={setDescription}
                       multiline
@@ -305,14 +305,14 @@ const EditScreen = props => {
                     />
 
                     <Button
-                      title="Save"
+                      title={t('EditBanner.save')}
                       onPress={() => {
                         handleSave();
                       }}
                     />
                     <View style={{height: 20}} />
                     <Button
-                      title="Close"
+                      title={t('EditBanner.close')}
                       onPress={() => {
                         setVisible(false);
                       }}
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
     fontFamily: 'Sen-Bold',
-        marginBottom: 10,
+    marginBottom: 10,
   },
   input: {
     height: 40,
@@ -415,16 +415,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Sen-Bold',
     textAlign: 'center',
-    flexShrink: 1, 
-    fontSize:11
+    flexShrink: 1,
+    fontSize: 11,
   },
   buttonTextBlack: {
     color: 'black',
     fontFamily: 'Sen-Bold',
     textAlign: 'center',
     flexShrink: 1,
-    fontSize:11
-
+    fontSize: 11,
   },
 });
 

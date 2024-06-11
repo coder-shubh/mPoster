@@ -15,6 +15,7 @@ import {Colors} from '../../utils/Colors';
 import DeletePopUp from '../../Component/DeletePopUp';
 import Globals from '../../utils/Globals';
 import ModalPopup from '../../Component/ModalPopup';
+import { useTranslation } from 'react-i18next';
 
 const {width} = Dimensions.get('window');
 
@@ -25,6 +26,8 @@ export default function EditProfileScreen({navigation}) {
   const componentWidth = (width * 95) / 100;
   const onStateChange = ({open}) => setState({open});
   const {open} = state;
+  const {t} = useTranslation();
+  const {theme} = useTheme();
 
   useEffect(() => {
     viewModal.getAllUserPic();
@@ -54,14 +57,18 @@ export default function EditProfileScreen({navigation}) {
   );
 
 
-  const setDefaultImage=()=>{
-    if(viewModal.selectedImage){
-      return Globals.image_Url+viewModal.selectedImage
-    }
-  }
+  // const setDefaultImage=()=>{
+  //   if(viewModal.selectedImage){
+  //     return Globals.image_Url+viewModal.selectedImage
+  //   }
+  // }
+  const themes = {
+    colors: 
+      theme === 'light' ? Colors.primaryTheme : Colors.secondaryBlack,
+  };
 
   return (
-    <PaperProvider>
+    <PaperProvider theme={themes}>
       <DeletePopUp
         show={viewModal.visible}
         press={() => {
@@ -93,18 +100,18 @@ export default function EditProfileScreen({navigation}) {
               mode="elevated"
               style={{borderRadius: 10}}
               onPress={() => viewModal.updateFile('photo')}>
-              Change Photo
+              {t('EditProfile.change_Photo')}
             </Button>
             <Button
               icon="notebook-edit"
               mode="contained-tonal"
               style={{borderRadius: 10}}
               onPress={() => navigation.navigate('PartyList')}>
-              Change Party
+              {t('EditProfile.change_Party')}
             </Button>
           </View>
           <Text style={[styles.subText, {margin: 10}]}>
-            Saved Profile Pictures:
+            {t('EditProfile.saved_Profile_Pictures')}
           </Text>
           <FlatList
             data={viewModal.filePaths}
@@ -116,7 +123,7 @@ export default function EditProfileScreen({navigation}) {
       ) : (
         <View style={[styles.container, {justifyContent: 'center'}]}>
           <MaterialIcons name="image" size={100} color={Colors.Iris} />
-          <Text style={styles.subText}>Upload Your Image</Text>
+          <Text style={styles.subText}>{t('EditProfile.upload_Your_Image')}</Text>
         </View>
       )}
 
@@ -128,17 +135,17 @@ export default function EditProfileScreen({navigation}) {
           actions={[
             {
               icon: 'delete',
-              label: 'Remove Images',
+              label: t('EditProfile.remove_Images'),
               onPress: () => viewModal.setVisible(true),
             },
-            {
-              icon: 'camera',
-              label: 'Camera',
-              onPress: () => viewModal.captureImage('photo'),
-            },
+            // {
+            //   icon: 'camera',
+            //   label: 'Camera',
+            //   onPress: () => viewModal.captureImage('photo'),
+            // },
             {
               icon: 'panorama',
-              label: 'Gallery',
+              label: t('EditProfile.gallery'),
               onPress: () => viewModal.chooseFile('photo'),
             },
           ]}
