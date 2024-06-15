@@ -74,18 +74,21 @@ export function DrawerContent(props) {
     const fLogin = await AsyncStorage.getItem('fLogin');
     const gLogin = await AsyncStorage.getItem('gLogin');
 
-
     if(fLogin){
       LoginManager.logOut();
       await AsyncStorage.removeItem('fLogin');
+      console.log('logout')
       resetToScreen(props.navigation, 'LoginView');
+      
     }else if(gLogin){
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
       await AsyncStorage.removeItem('gLogin');
+      console.log('logout')
       resetToScreen(props.navigation, 'LoginView');
     }
     else{
+      console.log('logout')
     resetToScreen(props.navigation, 'LoginView');
     }
 

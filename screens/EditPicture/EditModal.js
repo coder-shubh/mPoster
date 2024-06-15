@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {PermissionsAndroid, Platform} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Globals from '../../utils/Globals';
-import {getApiCall, postApiCall, postCall} from '../../utils/ApiHandler';
-import axios from 'axios';
+import {getApiCall} from '../../utils/ApiHandler';
 
 export default function EditModal() {
   const [filePaths, setFilePaths] = useState([]);
@@ -138,12 +137,13 @@ export default function EditModal() {
       }
       const newUris = response?.assets.map(asset => asset.uri);
       // setFilePaths([...filePaths, ...newUris]);
-      uploadImage(response.assets);
       console.log(response);
+      uploadImage(response.assets);
     });
   };
 
   const uploadImage = async image => {
+    setModalVisible(true);
     const formdata = new FormData();
     const photo = image[0];
     formdata.append('images', {
@@ -151,7 +151,7 @@ export default function EditModal() {
       type: photo.type,
       uri: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri,
     });
-
+console.log('formdata',formdata)
     const requestOptions = {
       method: 'POST',
       body: formdata,
@@ -159,15 +159,16 @@ export default function EditModal() {
         'Content-Type': 'multipart/form-data; ',
       },
     };
-
     fetch(
       'http://103.97.197.49/PosterApp/Api/user/UploadUserPic?id=1&fileType=uProfile&userId=' +
         Globals.UrCode,
       requestOptions,
     )
-      .then(response => response.json())
+      .then(response => console.log('responsssseee',response.json()))
+      .then(result => setModalVisible(false))
       .then(result => getAllUserPic())
-      .catch(error => console.error(error));
+      .catch(error => console.error(error))
+      .catch(error=>setModalVisible(false))
   };
 
   const getAllUserPic = async () => {
@@ -189,7 +190,6 @@ export default function EditModal() {
   const getUserDefaultPic = async () => {
     try {
       setModalVisible(true);
-
       let res = await getApiCall({
         url: 'user/getUserDefaultPic?userId=' + Globals.UrCode,
       });

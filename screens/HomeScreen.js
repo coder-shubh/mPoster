@@ -23,8 +23,8 @@ import {useTranslation} from 'react-i18next';
 import ModalPopup from '../Component/ModalPopup';
 import MainHeader from '../Component/MainHeader';
 import globalStyles from '../Component/Styles/globalStyles';
-import { Colors } from '../utils/Colors';
-import { useTheme } from '../Component/ThemeProvider';
+import {Colors} from '../utils/Colors';
+import {useTheme} from '../Component/ThemeProvider';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
@@ -35,8 +35,7 @@ const HomeScreen = props => {
   const excludedImageRef = useRef();
   const [refreshing, setRefreshing] = useState(false);
   const style = globalStyles();
-  const {theme} = useTheme();
-
+  const [ProfilePicture, setProfilePicture] = useState('');
   useEffect(() => {
     getBanners();
   }, []);
@@ -53,6 +52,7 @@ const HomeScreen = props => {
       alert(e);
     } finally {
       setModalVisible(false);
+      getUserDefaultPic();
       setRefreshing(false);
     }
   };
@@ -284,7 +284,7 @@ const HomeScreen = props => {
           </View>
           <Image
             ref={excludedImageRef}
-            source={require('../assets/w.png')}
+            source={{uri: Globals.image_Url + ProfilePicture}}
             resizeMode="contain"
             style={styles.excludedImage}
           />
@@ -305,13 +305,33 @@ const HomeScreen = props => {
           <TouchableOpacity
             style={[styles.button, {backgroundColor: 'grey'}]}
             onPress={() =>
-              props.navigation.navigate('EditScreen', {item: item})
+              props.navigation.navigate('EditScreen', {
+                item: item,
+                ProfilePicture: Globals.image_Url + ProfilePicture,
+              })
             }>
             <Text style={styles.buttonText}>{t('edit')}</Text>
           </TouchableOpacity>
         </View>
       </View>
     );
+  };
+
+  const getUserDefaultPic = async () => {
+    try {
+      setModalVisible(true);
+      let res = await getApiCall({
+        url: 'user/getUserDefaultPic?userId=' + Globals.UrCode,
+      });
+      if (res?.StatusCode == 1) {
+        console.log('reywriyweiuryiwu', res?.ResultData);
+        setProfilePicture(res?.ResultData[0]?.fileUrl);
+      }
+    } catch (e) {
+      alert(e);
+    } finally {
+      setModalVisible(false);
+    }
   };
 
   return (

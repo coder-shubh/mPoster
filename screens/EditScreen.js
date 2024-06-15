@@ -37,16 +37,17 @@ const EditScreen = props => {
   const [subtitle, setSubtitle] = useState('');
   const [description, setDescription] = useState('');
   const [visible, setVisible] = useState(false);
-  const {item} = props.route.params;
+  const {item, ProfilePicture} = props.route.params;
   const {t, i18n} = useTranslation();
   const {theme} = useTheme();
 
   useEffect(() => {
     props.navigation.setOptions({
-      headerStyle: { backgroundColor: theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack, }, 
-      headerTintColor: theme === 'light'
-      ? Colors.blackText
-      : Colors.whiteText,
+      headerStyle: {
+        backgroundColor:
+          theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack,
+      },
+      headerTintColor: theme === 'light' ? Colors.blackText : Colors.whiteText,
     });
   }, [props.navigation]);
   useEffect(() => {
@@ -132,7 +133,12 @@ const EditScreen = props => {
 
   return (
     <>
-      <StatusBar barStyle={theme === 'light'?"dark-content":"light-content"} backgroundColor={theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack} />
+      <StatusBar
+        barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+        backgroundColor={
+          theme === 'light' ? Colors.primaryTheme : Colors.primaryBlack
+        }
+      />
       <SafeAreaView style={styles.keyboardAvoidingContainer}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -223,7 +229,7 @@ const EditScreen = props => {
     }}
   > */}
                   <Image
-                    source={require('../assets/w.png')}
+                    source={{uri: ProfilePicture}}
                     style={{width: '100%', height: '100%'}}
                   />
                   {/* </View> */}
